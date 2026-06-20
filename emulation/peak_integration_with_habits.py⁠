@@ -1,0 +1,113 @@
+import time
+from datetime import datetime, timedelta
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+# ==============================================================================
+# NCA PEAK EMULATION MATRIX WITH HABIT AUDITING
+# SPECIFICATION: Phase IV Integration / Unsupervised Observation Mode
+# ==============================================================================
+
+# --- MOCK STATE DATABASE ---
+state_database = {
+    "hvac": {"G": False, "Y": False, "W": False, "zones": {"1": {"damper": "OPEN", "temp": 71.5}}},
+    "hydronic": {"set_temp": 110, "pressure_psi": 55},
+    "electric": {"main_panel_load": 1.2},
+    "audio": {"active_announcement": None},
+    "appliance": {"keurig_primed": False, "roomba_state": "CHARGING"}
+}
+
+# --- UNSUPERVISED OBSERVATION MATRIX (7 Days of Captured Manual Routines) ---
+historical_habit_ledger = [
+    # Morning Routine Clustering: Monday through Friday
+    {"day": "Mon", "time": "07:15", "device": "keurig", "action": "BREW_START"},
+    {"day": "Mon", "time": "07:18", "device": "audio", "action": "WEATHER_PROMPT"},
+    {"day": "Tue", "time": "07:14", "device": "keurig", "action": "BREW_START"},
+    {"day": "Tue", "time": "07:16", "device": "audio", "action": "WEATHER_PROMPT"},
+    {"day": "Wed", "time": "07:20", "device": "keurig", "action": "BREW_START"},
+    {"day": "Thu", "time": "07:13", "device": "keurig", "action": "BREW_START"},
+    {"day": "Fri", "time": "07:17", "device": "audio", "action": "WEATHER_PROMPT"},
+    
+    # Mid-Morning Automated Cleaning Windows
+    {"day": "Mon", "time": "08:30", "device": "roomba", "action": "CLEAN_CYCLE_START"},
+    {"day": "Tue", "time": "08:35", "device": "roomba", "action": "CLEAN_CYCLE_START"},
+    {"day": "Wed", "time": "08:32", "device": "roomba", "action": "CLEAN_CYCLE_START"},
+    
+    # Evening Hydronic & Appliance Load Stacking
+    {"day": "Mon", "time": "19:45", "device": "hydronic", "action": "SHOWER_TEMP_SET_105F"},
+    {"day": "Mon", "time": "20:15", "device": "laundry", "action": "DRYER_START"},
+    {"day": "Wed", "time": "19:50", "device": "hydronic", "action": "SHOWER_TEMP_SET_105F"},
+    {"day": "Wed", "time": "20:05", "device": "laundry", "action": "DRYER_START"}
+]
+
+def nca_log(module, action, detail):
+    """Standard NCA terminal log layout for trade verification."""
+    timestamp = time.strftime('%H:%M:%S')
+    print(f"[{timestamp}] NCA // {module.upper()} // ACT: {action.upper()} // DET: {detail}")
+
+# ==============================================================================
+# DAY 8 PREDICTIVE LOOK-AHEAD CORE ALGORITHM
+# ==============================================================================
+@app.route('/api/predictive/look_ahead', methods=['GET'])
+def run_look_ahead():
+    """
+    Simulates N.E.L.S.O.N.'s predictive daemon. It looks 15 minutes into the 
+    future based on the custom day/time passed in the URL parameters.
+    Example: /api/predictive/look_ahead?day=Mon&time=07:05
+    """
+    test_day = request.args.get('day', time.strftime('%a'))
+    time_str = request.args.get('time', time.strftime('%H:%M'))
+    
+    try:
+        current_dt = datetime.strptime(time_str, "%H:%M")
+    except ValueError:
+        return jsonify({"error": "Invalid time format. Use HH:MM"}), 400
+
+    nca_log("CORE", "RUN_LOOK_AHEAD", f"Scanning ledger pattern clusters for {test_day} around {time_str}...")
+    
+    predictions_triggered = []
+
+    # Parse historical database for events happening within a 15-minute window
+    for event in historical_habit_ledger:
+        event_dt = datetime.strptime(event["time"], "%H:%M")
+        time_difference = event_dt - current_dt
+        
+        # Check if historical event falls within a 0 to +15 minute window from 'now'
+        if 0 <= time_difference.total_seconds() <= 900:
+            # Check for generic weekday clustering (Mon-Fri)
+            is_weekday_match = test_day in ["Mon", "Tue", "Wed", "Thu", "Fri"] and event["day"] in ["Mon", "Tue", "Wed", "Thu", "Fri"]
+            
+            if event["day"] == test_day or is_weekday_match:
+                detail_msg = f"Predicted manual use of [{event['device']}] -> Executing automation pre-heat/run sequence."
+                nca_log("PREDICTIVE", "AUTO_PASSIVE_ENGAGE", detail_msg)
+                predictions_triggered.append(event)
+
+    return jsonify({
+        "simulated_time": time_str,
+        "simulated_day": test_day,
+        "look_ahead_window_minutes": 15,
+        "actions_preempted": predictions_triggered,
+        "count": len(predictions_triggered)
+    })
+
+# ==============================================================================
+# TRADITIONAL MANUAL OVERRIDE ENDPOINTS (Simulating User Intervention)
+# ==============================================================================
+@app.route('/api/manual/interact', methods=['GET'])
+def manual_interaction():
+    """
+    Logs a live manual event from the user to the runtime terminal screen.
+    Example: /api/manual/interact?device=keurig&action=BREW_START
+    """
+    device = request.args.get('device', 'unknown')
+    action = request.args.get('action', 'TRIGGER')
+    
+    nca_log("MANUAL_AUDIT", "USER_PROMPT", f"User manually executed {action} on {device}. Logging timestamp to memory.")
+    return jsonify({"status": "LOGGED", "device": device, "action": action})
+
+if __name__ == '__main__':
+    print("==============================================================================")
+    print("      NCA CORE AUTOMATION // N.E.L.S.O.N. HABIT LEARNING INFRASTRUCTURE      ")
+    print("==============================================================================")
+    app.run(host='0.0.0.0', port=5000, debug=True)
