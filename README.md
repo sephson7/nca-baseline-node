@@ -1,40 +1,34 @@
-# Nelson Core Automation (NCA) — Baseline Node
+# Nelson Core Automation (NCA) — N.E.L.S.O.N. Baseline Node
 
 Welcome to the foundational repository for **N.E.L.S.O.N.** (*Networked Element Local System & Optimized Node*), developed by Nelson Core Automation.
 
-## 🎯 The Vision
-N.E.L.S.O.N. is an ecosystems-focused smart home controller engineered for the modern family, dedicated athletes, and structured individuals. Unlike traditional smart hubs that rely entirely on unstable cloud networks, N.E.L.S.O.N. processes data locally at the edge. 
+## 🎯 The Core Vision
+N.E.L.S.O.N. is an ecosystems-focused smart home controller engineered for modern families, dedicated athletes, and structured individuals. Traditional smart hubs rely entirely on unstable, privacy-invasive cloud networks. N.E.L.S.O.N. fundamentally changes this by processing behavioral data entirely at the edge on localized hardware. 
 
-It is designed to seamlessly learn the routines, habits, and physiological environments of its host family—anticipating localized climate adjustments, maximizing athletic sleep recovery, and calculating optimal energy-saving configurations by recommending when to scale peripheral hardware components up or down.
-
----
-
-## 🛠️ Current Project Phase: Square One (Pure Simulation)
-**Status:** Software Architecture & Logic Prototyping
-
-Every great automation machine starts with a single line of logic. To ensure stability, safety, and core competency, this phase of the project uses **pure software simulations** running on local computing hardware (Laptop) to map out how environmental inputs directly dictate automated system actions.
-
-### Core Concepts Demonstrated:
-1. **The Input Loop:** Reading state data (simulated temperatures, occupancy tracking, and recovery targets).
-2. **The Logic Bridge:** Processing data points against user routines (e.g., Athlete Sleep Optimization Window).
-3. **The Localized Output:** Dictating system decisions locally without external cloud dependency to protect consumer privacy.
+The goal of this system is to observe daily routines, store behavioral logs locally, learn host family patterns, and ultimately automate linked smart appliances (HVAC, Lighting, Refrigeration, and Laundry) to optimize energy use, protect privacy, and maximize human performance.
 
 ---
 
-## 🚀 Future Roadmap
-As my engineering and programming education scales, this software repository will transition through the following physical development cycles:
+## 🛠️ Current Project Phase: Core Logic Simulation
+**Status:** Pure Software Behavioral Testing
 
-* **Phase 1 (Current):** Pure Python environment simulation (laptop-side testing).
-* **Phase 2:** Local API integrations using lightweight web frameworks (Flask) to interact with localized devices.
-* **Phase 3:** Hardware deployment onto physical localized nodes utilizing relay switches and low-voltage external circuitry.
-* **Phase 4:** Production of the localized industrial chassis, featuring modular Universal Inputs and a customized, host-nameable HMI automation persona.
+Before deploying to physical relays, microcontrollers, or customized chassis, the system's "brain logic" must be thoroughly simulated. This repository contains purely software-driven scenarios running in standard Python. 
+
+By changing the input conditions (like the time of day, occupancy, or utility grid pricing), the localized core logic calculates and outputs immediate automation commands to simulated home appliances.
+
+### Demonstrable Features in this Commit:
+1. **Athlete Recovery Optimization:** Automatically scales HVAC down to an optimal cooling profile during targeted sleeping windows to assist muscle recovery.
+2. **Grid-Aware Peak Intercept:** Minimizes utility costs by detecting high-rate peak hours and commanding energy-heavy smart appliances (like a refrigerator defrost cycle or laundry unit) to pause until rates drop.
+3. **Privacy-First Local Computation:** Demonstrates how complex ecosystem decisions can be completely calculated without sending data to an external server.
 
 ---
 
-## 📈 Running the Simulations
-To run the local behavioral scenario logic on your machine, clone this repository and execute the primary node script:
+## 📈 How to Run the Simulations
+Because this code relies 100% on pure software logic and standard Python variables, **anyone can run this scenario node on their own system.**
+
+To pull this repository down and execute the appliance ecosystem simulation on your local machine, open your terminal and run:
 
 ```bash
 git clone [https://github.com/sephson7/nca-baseline-node.git](https://github.com/sephson7/nca-baseline-node.git)
 cd nca-baseline-node
-python nelson_ecosystem.py
+python nelson-ecosystem.py
