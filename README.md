@@ -37,4 +37,4 @@ To run the local behavioral scenario logic on your machine, clone this repositor
 ```bash
 git clone [https://github.com/sephson7/nca-baseline-node.git](https://github.com/sephson7/nca-baseline-node.git)
 cd nca-baseline-node
-python nelson_simulation.py
+python nelson_ecosystem.py
