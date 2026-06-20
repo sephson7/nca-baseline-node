@@ -1,0 +1,59 @@
+# ===================================================================
+# N.E.L.S.O.N. — Full Ecosystem Behavioral Simulation
+# ===================================================================
+
+# 📊 1. THE INPUTS (You can change these numbers and re-run the code!)
+current_house_inputs = {
+    "time_of_day_24h": 7,          # Change from 0 to 23 (e.g., 7 = 7:00 AM, 14 = 2:00 PM)
+    "is_family_home": True,        # Change to True or False
+    "electricity_rate_high": False # Change to True during peak expensive grid hours
+}
+
+# 🧠 2. THE ADVANCED BEHAVIORAL LOGIC ENGINE
+def run_nelson_automation_brain():
+    print("=" * 60)
+    print("🤖 N.E.L.S.O.N. ECOSYSTEM STATE REPORT")
+    print("=" * 60)
+    print(f"📋 Current Inputs -> Time: {current_house_inputs['time_of_day_24h']}:00 | Present: {current_house_inputs['is_family_home']} | Peak Grid Cost: {current_house_inputs['electricity_rate_high']}\n")
+    
+    # Create blank statuses for our linked appliances
+    hvac_mode = "IDLE"
+    kitchen_lights = "OFF"
+    refrigerator_mode = "STANDARD ACTIVE"
+    laundry_unit_permission = "ALLOWED"
+
+    # --- APPLIANCE 1: HVAC SYSTEM LOGIC ---
+    if current_house_inputs["is_family_home"] == True:
+        if 6 <= current_house_inputs["time_of_day_24h"] <= 9:
+            hvac_mode = "HEAT / COMFORT PROFILE (Morning Wake-up)"
+        elif 22 <= current_house_inputs["time_of_day_24h"] or current_house_inputs["time_of_day_24h"] <= 5:
+            hvac_mode = "ATHLETE SLEEP RECOVERY PROFILE (Cooler Temp)"
+        else:
+            hvac_mode = "STANDARD RUN"
+    else:
+        hvac_mode = "ECO-SAVE (House Empty)"
+
+    # --- APPLIANCE 2: LIGHTING LOGIC ---
+    if current_house_inputs["is_family_home"] == True and (current_house_inputs["time_of_day_24h"] >= 19 or current_house_inputs["time_of_day_24h"] <= 7):
+        kitchen_lights = "ON (Routine Pathway Illuminated)"
+    else:
+        kitchen_lights = "OFF"
+
+    # --- APPLIANCE 3 & 4: GRID-AWARE SMART APPLIANCES (Fridge & Laundry) ---
+    if current_house_inputs["electricity_rate_high"] == True:
+        refrigerator_mode = "DEFROST CYCLE DELAYED (Saving Energy Peak Hours)"
+        laundry_unit_permission = "PAUSED / DELAYED START (Waiting for cheaper electricity rates)"
+    else:
+        refrigerator_mode = "STANDARD ACTIVE"
+        laundry_unit_permission = "READY / RUNNING"
+
+    # 🚨 3. THE AUTOMATED HARDWARE OUTPUTS
+    print("[LINKED SMART APPLIANCE OUTCOMES]")
+    print(f"🌡️  HVAC Controller:     {hvac_mode}")
+    print(f"💡 Kitchen Lighting:   {kitchen_lights}")
+    print(f"🧊 Smart Refrigerator: {refrigerator_mode}")
+    print(f"🧺 Linked Laundry Pod:  {laundry_unit_permission}")
+    print("=" * 60 + "\n")
+
+# Run the brain with the inputs we chose above
+run_nelson_automation_brain()
