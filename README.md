@@ -1,44 +1,40 @@
-# nca-baseline-node
+# Nelson Core Automation (NCA) — Baseline Node
 
-# NCA Project Baseline: Core Node Prototype
+Welcome to the foundational repository for **N.E.L.S.O.N.** (*Networked Element Local System & Optimized Node*), developed by Nelson Core Automation.
 
-This repository contains the foundational architecture for low-voltage relay controls, time-stamped habit logging, and predictive ambient intelligence loops designed to bridge software engineering with physical mechanical systems.
+## 🎯 The Vision
+N.E.L.S.O.N. is an ecosystems-focused smart home controller engineered for the modern family, dedicated athletes, and structured individuals. Unlike traditional smart hubs that rely entirely on unstable cloud networks, N.E.L.S.O.N. processes data locally at the edge. 
 
-## System Topology & Wiring Architecture
+It is designed to seamlessly learn the routines, habits, and physiological environments of its host family—anticipating localized climate adjustments, maximizing athletic sleep recovery, and calculating optimal energy-saving configurations by recommending when to scale peripheral hardware components up or down.
 
-```text
-+-----------------------------------------------------------------------+
-|                       SMARTPHONE / WEB BROWSER INTERFACE              |
-+-----------------------------------------------------------------------+
-                                    |  (Wireless Local Network via Wi-Fi/Flask)
-                                    v
-+-----------------------------------------------------------------------+
-|                       RASPBERRY PI CONTROLLER NODE                     |
-|                                                                       |
-|   +--------------------------+        +---------------------------+   |
-|   | SQLite Database Engine   |        | Predictive Python Daemon  |   |
-|   | (nelson_core_logs.db)    |        | (Pattern Recognition)     |   |
-|   +--------------------------+        +---------------------------+   |
-|                |                                    |                 |
-|                | GPIO Pin 23 (Bulb Output)          | GPIO Pin 24     |
-+----------------+------------------------------------+-----------------+
-                 |                                    | (Fan Output)
-                 v                                    v
-+-----------------------------------------------------------------------+
-|                       5V OPTOMECHANICAL RELAY BOARD                   |
-|       [Channel 1 Input]                    [Channel 2 Input]          |
-|               |                                    |                  |
-+---------------+------------------------------------+------------------+
-                | (Breaks 12V+ Rail)                 | (Breaks 12V+ Rail)
-                v                                    v
-+-------------------------------+    +----------------------------------+
-| ELEMENT 01: HEATING LOAD SLAB |    | ELEMENT 02: VOLUMETRIC AIR FLOW  |
-|      (12V Practice Bulb)      |    |        (12V Brushless Fan)       |
-+-------------------------------+    +----------------------------------+
-                |                                    |
-                +-----------------+------------------+
-                                  |
-                                  v
-+-----------------------------------------------------------------------+
-|                    EXTERNAL 12V DC TRANSFORMER BUS                    |
-+-----------------------------------------------------------------------+
+---
+
+## 🛠️ Current Project Phase: Square One (Pure Simulation)
+**Status:** Software Architecture & Logic Prototyping
+
+Every great automation machine starts with a single line of logic. To ensure stability, safety, and core competency, this phase of the project uses **pure software simulations** running on local computing hardware (Laptop) to map out how environmental inputs directly dictate automated system actions.
+
+### Core Concepts Demonstrated:
+1. **The Input Loop:** Reading state data (simulated temperatures, occupancy tracking, and recovery targets).
+2. **The Logic Bridge:** Processing data points against user routines (e.g., Athlete Sleep Optimization Window).
+3. **The Localized Output:** Dictating system decisions locally without external cloud dependency to protect consumer privacy.
+
+---
+
+## 🚀 Future Roadmap
+As my engineering and programming education scales, this software repository will transition through the following physical development cycles:
+
+* **Phase 1 (Current):** Pure Python environment simulation (laptop-side testing).
+* **Phase 2:** Local API integrations using lightweight web frameworks (Flask) to interact with localized devices.
+* **Phase 3:** Hardware deployment onto physical localized nodes utilizing relay switches and low-voltage external circuitry.
+* **Phase 4:** Production of the localized industrial chassis, featuring modular Universal Inputs and a customized, host-nameable HMI automation persona.
+
+---
+
+## 📈 Running the Simulations
+To run the local behavioral scenario logic on your machine, clone this repository and execute the primary node script:
+
+```bash
+git clone [https://github.com/sephson7/nca-baseline-node.git](https://github.com/sephson7/nca-baseline-node.git)
+cd nca-baseline-node
+python nelson_simulation.py
